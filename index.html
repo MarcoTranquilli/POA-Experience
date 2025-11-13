@@ -5,681 +5,211 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fanta-POA 4.0: L'Istruttoria Perfetta</title>
   <style>
-    /* qui tutto il tuo CSS esistente */
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f4f7fa; color: #333; padding: 20px; }
     .container { max-width: 1100px; margin: 20px auto; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
     .header { background-color: #0747a6; color: white; padding: 25px 30px; text-align: center; }
-    /* resto del CSS ... */
+    .header p { font-size: 1.2em; opacity: 0.9; margin: 5px 0 0; }
+    .content { padding: 30px; }
+    h2 { color: #0747a6; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-top: 30px; }
+
+    /* Sezione Regolamento */
+    details { background: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; }
+    summary { font-size: 1.3em; font-weight: 600; color: #0052cc; padding: 15px; cursor: pointer; list-style: none; }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '► '; font-size: 0.8em; margin-right: 8px; }
+    details[open] summary::before { content: '▼ '; }
+    .rules-content { padding: 0 20px 20px 40px; }
+
+    /* Tabelle */
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+    thead th { background-color: #0747a6; color: white; font-size: 0.9em; text-transform: uppercase; }
+    tbody tr:nth-child(even) { background-color: #f8f9fa; }
+    .bonus-points { color: #006400; font-weight: 600; }
+    .malus-points { color: #b30000; font-weight: 600; }
+
+    /* Sezioni Interattive */
+    .interactive-section { background: #fdfdfd; border: 1px solid #e0e0e0; border-radius: 5px; padding: 20px; margin-top: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; font-weight: 600; margin-bottom: 5px; }
+    input[type="text"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    button { background-color: #0052cc; color: white; padding: 10px 18px; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; font-weight: 600; transition: background-color 0.2s ease; }
+    button:hover { background-color: #0065ff; }
+    .player-card { background: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 15px; margin-bottom: 15px; }
+    .player-card h3 { margin: 0 0 10px 0; color: #0052cc; }
+    .initiative-item { font-size: 0.9em; list-style-type: none; padding: 5px 0; border-bottom: 1px dashed #eee; }
+    .captain { font-weight: bold; color: #d97706; }
+    .captain::before { content: '© '; }
+    #leaderboard-table th:first-child, #leaderboard-table td:first-child { width: 50px; text-align: center; font-weight: bold; }
+    #leaderboard-table td:last-child { font-weight: bold; font-size: 1.2em; }
   </style>
 </head>
 <body>
-  <!-- Contenuto principale della pagina -->
-  <div class="container">
-    <div class="header">
-      <h1>Fanta-POA 4.0: L'Istruttoria Perfetta</h1>
-      <p>Benvenuto nel sito protetto!</p>
-    </div>
-    <!-- Resto del contenuto -->
+
+<div class="container">
+  <div class="header">
+    <h1>🏆 Fanta-POA 4.0</h1>
+    <p>L'Istruttoria Perfetta</p>
   </div>
 
-  <!-- === SCRIPT DI PROTEZIONE: alla fine del body === -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.init();
-      window.netlifyIdentity.on('init', user => {
-        if (!user) {
-          // Utente non loggato → redirect al login
-          window.location.href = "/login.html";
-        }
-      });
-      // Redirect automatico dopo login
-      window.netlifyIdentity.on('login', user => {
-        window.location.href = "/";
-      });
-    }
-  </script>
-</body>
-</html>
+  <div class="content">
+    <!-- Regolamento -->
+    <details>
+      <summary>Leggi il Regolamento Ufficiale</summary>
+      <div class="rules-content">
+        <p>Benvenuti alla prima edizione del Fanta-POA. Ognuno di noi è un <strong>Fanta-Dirigente</strong>...</p>
+        <!-- Inserisci qui il resto del contenuto regolamento e tabelle -->
+      </div>
+    </details>
 
-<!-- === 3. CONTENUTO DELLA PAGINA === -->
-<div class="container">
-    <div class="header">
-        <h1>Fanta-POA 4.0: L'Istruttoria Perfetta</h1>
+    <!-- Gestione giocatori -->
+    <h2>Gestione Fanta-Dirigenti</h2>
+    <div class="interactive-section">
+      <div class="form-group">
+        <label for="player-name">Nome Fanta-Dirigente:</label>
+        <input type="text" id="player-name-input" placeholder="Es. Mario Rossi">
+      </div>
+      <button id="add-player-btn">Aggiungi Giocatore</button>
     </div>
-    <p>Benvenuto nel sito protetto!</p>
-    <!-- resto del contenuto -->
+    <div id="players-dashboard"></div>
+
+    <!-- Lista iniziative -->
+    <h2>Lista Iniziative (per Asta)</h2>
+    <div class="interactive-section">
+      <table id="initiatives-table">
+        <thead>
+          <tr>
+            <th>ID POA</th>
+            <th>Nome Iniziativa</th>
+            <th>Ruolo (Budget)</th>
+            <th>Costo Asta (CdG)</th>
+            <th>Note Strategiche</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Dashboard GM -->
+    <h2>Dashboard Game Master</h2>
+    <div class="interactive-section">
+      <div class="form-group">
+        <label for="gm-initiative-select">Seleziona Iniziativa:</label>
+        <select id="gm-initiative-select"></select>
+      </div>
+      <div class="form-group">
+        <label for="gm-bonus-select">Seleziona Bonus / Malus:</label>
+        <select id="gm-bonus-select"></select>
+      </div>
+      <button id="apply-score-btn">Applica Punteggio</button>
+
+      <h3>Registro Eventi</h3>
+      <ul id="game-log-list"></ul>
+    </div>
+
+    <!-- Classifica -->
+    <h2>🏆 Classifica Ufficiale 🏆</h2>
+    <div class="interactive-section">
+      <table id="leaderboard-table">
+        <thead>
+          <tr><th>Pos.</th><th>Fanta-Dirigente</th><th>Punteggio Totale</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+  </div>
 </div>
 
-</body>
-</html>
+<!-- === SCRIPT DI GIOCO === -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // --- DATABASE ---
+  const INITIATIVES_DB = [
+    { id:1, id_poa:314, name:"BC098 - SERVIZI INFORMATICI APPLICATIVI", role:"Scommessa (<100k)", cost:15, notes:"Basso costo, buono per bonus 'Confidenza'." },
+    { id:2, id_poa:163, name:"PEC - Evoluzione Tattica", role:"Scommessa (<100k)", cost:20, notes:"Basso costo, ma la PEC è sempre critica." }
+    // ... aggiungi le altre iniziative ...
+  ];
 
-        }
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-            margin: 5px 0 0;
-        }
-        .content {
-            padding: 30px;
-        }
-        h2 {
-            color: #0747a6;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 10px;
-            margin-top: 30px;
-        }
-        
-        /* Sezione Regolamento */
-        details {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        summary {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #0052cc;
-            padding: 15px;
-            cursor: pointer;
-            list-style: none; /* Rimuovi freccia di default */
-        }
-        summary::-webkit-details-marker { display: none; } /* Safari */
-        summary::before {
-            content: '► ';
-            font-size: 0.8em;
-            margin-right: 8px;
-        }
-        details[open] summary::before {
-            content: '▼ ';
-        }
-        .rules-content {
-            padding: 0 20px 20px 40px;
-        }
+  const SCORING_RULES = [
+    { id:'b1', text:"P1: Bonus 'ONE-SHOT' (+40)", points:40 },
+    { id:'m1', text:"P1: Malus 'Reiterazione' (-15)", points:-15 }
+    // ... aggiungi le altre regole ...
+  ];
 
-        /* Tabelle */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        thead th {
-            background-color: #0747a6;
-            color: white;
-            font-size: 0.9em;
-            text-transform: uppercase;
-        }
-        tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        .bonus-points {
-            color: #006400; /* Verde scuro */
-            font-weight: 600;
-        }
-        .malus-points {
-            color: #b30000; /* Rosso scuro */
-            font-weight: 600;
-        }
+  let players = [];
+  let initiatives = [...INITIATIVES_DB];
+  let gameLog = [];
 
-        /* Sezioni Interattive */
-        .interactive-section {
-            background: #fdfdfd;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        input[type="text"], select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box; /* Importante per il padding */
-        }
-        button {
-            background-color: #0052cc;
-            color: white;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            transition: background-color 0.2s ease;
-        }
-        button:hover {
-            background-color: #0065ff;
-        }
-        .player-card {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .player-card h3 {
-            margin: 0 0 10px 0;
-            color: #0052cc;
-        }
-        .initiative-item {
-            font-size: 0.9em;
-            list-style-type: none;
-            padding: 5px 0;
-            border-bottom: 1px dashed #eee;
-        }
-        .captain {
-            font-weight: bold;
-            color: #d97706; /* Oro */
-        }
-        .captain::before {
-            content: '© ';
-        }
+  // Riferimenti DOM
+  const playerNameInput = document.getElementById('player-name-input');
+  const addPlayerBtn = document.getElementById('add-player-btn');
+  const playersDashboard = document.getElementById('players-dashboard');
+  const initiativesTableBody = document.querySelector('#initiatives-table tbody');
+  const gmInitiativeSelect = document.getElementById('gm-initiative-select');
+  const gmBonusSelect = document.getElementById('gm-bonus-select');
+  const applyScoreBtn = document.getElementById('apply-score-btn');
+  const gameLogList = document.getElementById('game-log-list');
+  const leaderboardTableBody = document.querySelector('#leaderboard-table tbody');
 
-        /* Dashboard GM e Classifica */
-        #leaderboard-table th:first-child,
-        #leaderboard-table td:first-child {
-            width: 50px;
-            text-align: center;
-            font-weight: bold;
-        }
-        #leaderboard-table td:last-child {
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <div class="header">
-            <h1>🏆 Fanta-POA 4.0</h1>
-            <p>L'Istruttoria Perfetta</p>
-        </div>
-
-        <div class="content">
-
-            <details>
-                <summary>Leggi il Regolamento Ufficiale</summary>
-                <div class="rules-content">
-                    <p>Benvenuti alla prima edizione del Fanta-POA. Ognuno di noi è un <strong>Fanta-Dirigente</strong>. Lo scopo è creare un "Portafoglio" di Iniziative reali e accumulare punti in base a come queste sopravvivono al processo di approvazione.</p>
-                    
-                    <h3>1. La Squadra (Il "Portafoglio")</h3>
-                    <p>All'asta iniziale, ogni Fanta-Dirigente riceve <strong>250 "Crediti di Governance (CdG)"</strong> per acquistare un portafoglio di <strong>5 Iniziative REALI</strong> (prese dal file <code>POA.csv</code>).</p>
-                    <p>Il portafoglio deve includere:</p>
-                    <ul>
-                        <li><strong>1 Top Player</strong> (Budget > 400k)</li>
-                        <li><strong>2 Standard</strong> (Budget 100k - 400k)</li>
-                        <li><strong>2 Scommesse</strong> (Budget < 100k)</li>
-                    </ul>
-                    <p>Ogni giocatore nomina <strong>1 Iniziativa come Capitano</strong>. Tutti i suoi punteggi (Bonus e Malus) valgono <strong>doppio (x2)</strong>.</p>
-                    
-                    <h3>2. Le "Giornate" del Campionato</h3>
-                    <ol>
-                        <li><strong>Giornata 1:</strong> Il Raccordo FCA</li>
-                        <li><strong>Giornata 2:</strong> Il Consolidamento</li>
-                        <li><strong>Giornata 3:</strong> L'Approvazione Finale</li>
-                    </ol>
-                    
-                    <h3>3. Il Sistema di Punteggio</h3>
-                    
-                    <h4>Pilastro 1: Approvazione (Meno Modifiche)</h4>
-                    <table>
-                        <thead><tr><th>Punti</th><th>Bonus / Malus</th><th>Spiegazione</th></tr></thead>
-                        <tbody>
-                            <tr><td class="bonus-points">+40</td><td>Bonus "ONE-SHOT"</td><td>Approvata al 1° Round senza Note Sogei.</td></tr>
-                            <tr><td class="bonus-points">+15</td><td>Bonus "Raccordo Veloce"</td><td>Coerenza perfetta con il file FCA al primo tentativo.</td></tr>
-                            <tr><td class="malus-points">-15</td><td>Malus "Reiterazione"</td><td>Riceve Note Sogei e deve essere modificata.</td></tr>
-                            <tr><td class="malus-points">-25</td><td>Malus "Taglio Budget"</td><td>Importo approvabile < 20% del budget dichiarato.</td></tr>
-                        </tbody>
-                    </table>
-
-                    <h4>Pilastro 2: Completezza (Meno Rilavorazioni)</h4>
-                    <table>
-                        <thead><tr><th>Punti</th><th>Bonus / Malus</th><th>Spiegazione</th></tr></thead>
-                        <tbody>
-                            <tr><td class="bonus-points">+25</td><td>Bonus "Scheda d'Oro"</td><td>Prevalutazione Step 2 è "OK".</td></tr>
-                            <tr><td class="bonus-points">+15</td><td>Bonus "Confidenza Totale"</td><td>Livello di confidenza sulla stima è "Alto".</td></tr>
-                            <tr><td class="malus-points">-20</td><td>Malus "Scheda Insufficiente"</td><td>Prevalutazione Step 2 è "Scheda compilata in maniera insufficiente".</td></tr>
-                            <tr><td class="malus-points">-10</td><td>Malus "Confidenza Discreta"</td><td>Livello di confidenza è "Discreto" o "Incompleto".</td></tr>
-                        </tbody>
-                    </table>
-
-                    <h4>Pilastro 3: Presidio (Disponibilità Proponenti)</h4>
-                    <table>
-                        <thead><tr><th>Punti</th><th>Bonus / Malus</th><th>Spiegazione</th></tr></thead>
-                        <tbody>
-                            <tr><td class="bonus-points">+15</td><td>Bonus "Risposta Fulminea"</td><td>Il Proponente risponde alla Governance entro 3 ore.</td></tr>
-                            <tr><td class="bonus-points">+10</td><td>Bonus "Presidio Attivo"</td><td>Il Proponente partecipa attivamente alla riunione di Consolidamento.</td></tr>
-                            <tr><td class="malus-points">-15</td><td>Malus "In Sordina"</td><td>Il Proponente non si presenta a una riunione di allineamento.</td></tr>
-                            <tr><td class="malus-points">-30</td><td>Malus "Il Fantasma"</td><td>La Governance deve "inseguire" il Proponente per un dato mancante (>24h).</td></tr>
-                        </tbody>
-                    </table>
-
-                    <h4>Pilastro 4: Valore Aggiunto (Strategia)</h4>
-                    <table>
-                        <thead><tr><th>Punti</th><th>Bonus / Malus</th><th>Spiegazione</th></tr></thead>
-                        <tbody>
-                            <tr><td class="bonus-points">+20</td><td>Bonus "Valore In-House"</td><td>L'iniziativa è un Affidamento In-House a SOGEI.</td></tr>
-                            <tr><td class="bonus-points">+15</td><td>Bonus "Strategico (PNRR)"</td><td>L'iniziativa è finanziata da PNRR / Fondi Strutturali UE.</td></tr>
-                            <tr><td class="bonus-points">+30</td><td>Bonus "Citazione del Dirigente" (Il "Papalina")</td><td>Il Dirigente menziona l'iniziativa come "fondamentale" o "intoccabile".</td></tr>
-                            <tr><td class="malus-points">-40</td><td>Malus "Ma Siamo Sicuri?" (L'Autogol)</td><td>Il valore strategico viene messo in discussione dal management.</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </details>
-
-            <h2>Gestione Fanta-Dirigenti</h2>
-            <div class="interactive-section">
-                <div class="form-group">
-                    <label for="player-name">Nome Fanta-Dirigente:</label>
-                    <input type="text" id="player-name-input" placeholder="Es. Mario Rossi">
-                </div>
-                <button id="add-player-btn">Aggiungi Giocatore</button>
-            </div>
-
-            <div id="players-dashboard">
-                </div>
-
-            <h2>Lista Iniziative (per Asta)</h2>
-            <div class="interactive-section">
-                <table id="initiatives-table">
-                    <thead>
-                        <tr>
-                            <th>ID POA</th>
-                            <th>Nome Iniziativa (Rilascio)</th>
-                            <th>Ruolo (Budget)</th>
-                            <th>Costo Asta (CdG)</th>
-                            <th>Note Strategiche</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        </tbody>
-                </table>
-            </div>
-
-            <h2>Dashboard Game Master (Rendicontazione)</h2>
-            <div class="interactive-section">
-                <p>Usa questa sezione per assegnare i punteggi alle iniziative vendute. La classifica si aggiornerà automaticamente.</p>
-                <div class="form-group">
-                    <label for="gm-initiative-select">Seleziona Iniziativa (solo quelle acquistate):</label>
-                    <select id="gm-initiative-select"></select>
-                </div>
-                <div class="form-group">
-                    <label for="gm-bonus-select">Seleziona Bonus / Malus:</label>
-                    <select id="gm-bonus-select"></select>
-                </div>
-                <button id="apply-score-btn">Applica Punteggio</button>
-                
-                <h3>Registro Eventi</h3>
-                <ul id="game-log-list">
-                    </ul>
-            </div>
-
-            <h2>🏆 Classifica Ufficiale 🏆</h2>
-            <div class="interactive-section">
-                <table id="leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th>Pos.</th>
-                            <th>Fanta-Dirigente</th>
-                            <th>Punteggio Totale</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        </tbody>
-                </table>
-            </div>
-
-        </div>
-    </div>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-        // --- 1. DATABASE DI GIOCO ---
-        
-        // Dati delle iniziative (estratti dai file POA.csv e Glossario.csv)
-        // L'ID è fittizio (per JS), l'ID POA è quello reale
-        const INITIATIVES_DB = [
-            { id: 1, id_poa: 314, name: "BC098 - SERVIZI INFORMATICI APPLICATIVI", role: "Scommessa (<100k)", cost: 15, notes: "Basso costo, buono per bonus 'Confidenza'." },
-            { id: 2, id_poa: 163, name: "PEC - Evoluzione Tattica", role: "Scommessa (<100k)", cost: 20, notes: "Basso costo, ma la PEC è sempre critica." },
-            { id: 3, id_poa: 311, name: "A. IAM Utente Gestito", role: "Scommessa (<100k)", cost: 25, notes: "Rischio: 'Scheda insufficiente'. Alto rischio/rendimento." },
-            { id: 4, id_poa: 170, name: "Evoluzione SIGED", role: "Standard (100k-400k)", cost: 40, notes: "Un classico. Punti stabili, poche sorprese." },
-            { id: 5, id_poa: 152, name: "Revamp portale Area (Tranche 1)", role: "Standard (100k-400k)", cost: 45, notes: "Molta visibilità. Rischio Malus 'Ma siamo sicuri?'." },
-            { id: 6, id_poa: 191, name: "Supporto al Programma JDC", role: "Standard (100k-400k)", cost: 50, notes: "Affidamento SOGEI. Bonus 'In-House' quasi garantito." },
-            { id: 7, id_poa: 190, name: "Supporto al Programma GIZ", role: "Standard (100k-400k)", cost: 50, notes: "Affidamento SOGEI. Bonus 'In-House' quasi garantito." },
-            { id: 8, id_poa: 205, name: "Program Management (Governance)", role: "Top Player (>400k)", cost: 70, notes: "Affidamento SOGEI. Costoso ma pieno di bonus 'Presidio'." },
-            { id: 9, id_poa: 200, name: "ST PI - Envisioning IGOP", role: "Top Player (>400k)", cost: 80, notes: "Molto costoso. O ti fa vincere o ti distrugge." },
-            { id: 10, id_poa: 202, name: "ST PI - Config. Parametri 2", role: "Top Player (>400k)", cost: 75, notes: "Altro Top Player, alta esposizione a tagli budget." }
-        ];
-
-        // Regole di punteggio (per la dashboard GM)
-        const SCORING_RULES = [
-            { id: 'b1', text: "P1: Bonus 'ONE-SHOT' (+40)", points: 40 },
-            { id: 'b2', text: "P1: Bonus 'Raccordo Veloce' (+15)", points: 15 },
-            { id: 'm1', text: "P1: Malus 'Reiterazione' (-15)", points: -15 },
-            { id: 'm2', text: "P1: Malus 'Taglio Budget' (-25)", points: -25 },
-            { id: 'b3', text: "P2: Bonus 'Scheda d'Oro' (+25)", points: 25 },
-            { id: 'b4', text: "P2: Bonus 'Confidenza Totale' (+15)", points: 15 },
-            { id: 'm3', text: "P2: Malus 'Scheda Insufficiente' (-20)", points: -20 },
-            { id: 'm4', text: "P2: Malus 'Confidenza Discreta' (-10)", points: -10 },
-            { id: 'b5', text: "P3: Bonus 'Risposta Fulminea' (+15)", points: 15 },
-            { id: 'b6', text: "P3: Bonus 'Presidio Attivo' (+10)", points: 10 },
-            { id: 'm5', text: "P3: Malus 'In Sordina' (-15)", points: -15 },
-            { id: 'm6', text: "P3: Malus 'Il Fantasma' (-30)", points: -30 },
-            { id: 'b7', text: "P4: Bonus 'Valore In-House' (+20)", points: 20 },
-            { id: 'b8', text: "P4: Bonus 'Strategico (PNRR)' (+15)", points: 15 },
-            { id: 'b9', text: "P4: Bonus 'Citazione del Dirigente' (+30)", points: 30 },
-            { id: 'm7', text: "P4: Malus 'Ma Siamo Sicuri?' (-40)", points: -40 }
-        ];
-
-        // Stato del Gioco
-        let players = [];
-        let initiatives = [...INITIATIVES_DB]; // Copia per l'asta
-        let gameLog = []; // Registro degli eventi
-
-        // --- 2. RIFERIMENTI DOM (Gli elementi della pagina) ---
-        const playerNameInput = document.getElementById('player-name-input');
-        const addPlayerBtn = document.getElementById('add-player-btn');
-        const playersDashboard = document.getElementById('players-dashboard');
-        const initiativesTableBody = document.querySelector('#initiatives-table tbody');
-        const gmInitiativeSelect = document.getElementById('gm-initiative-select');
-        const gmBonusSelect = document.getElementById('gm-bonus-select');
-        const applyScoreBtn = document.getElementById('apply-score-btn');
-        const gameLogList = document.getElementById('game-log-list');
-        const leaderboardTableBody = document.querySelector('#leaderboard-table tbody');
-
-        // --- 3. FUNZIONI DI GIOCO ---
-
-        /** Inizializza il gioco caricando le tabelle */
-        function initializeGame() {
-            // Popola tabella Asta
-            initiativesTableBody.innerHTML = ''; // Pulisci
-            initiatives.forEach(init => {
-                const row = initiativesTableBody.insertRow();
-                row.innerHTML = `
-                    <td>${init.id_poa}</td>
-                    <td>${init.name}</td>
-                    <td>${init.role}</td>
-                    <td>${init.cost} CdG</td>
-                    <td>${init.notes}</td>
-                `;
-            });
-            
-            // Popola dropdown Bonus/Malus del GM
-            gmBonusSelect.innerHTML = '<option value="">Seleziona un evento...</option>';
-            SCORING_RULES.forEach(rule => {
-                const pointsText = rule.points > 0 ? `+${rule.points}` : rule.points;
-                gmBonusSelect.innerHTML += `<option value="${rule.id}">${rule.text} (${pointsText})</option>`;
-            });
-
-            updateAll();
-        }
-
-        /** Aggiunge un nuovo giocatore */
-        function addPlayer() {
-            const name = playerNameInput.value.trim();
-            if (name === "") {
-                alert("Inserisci un nome valido per il Fanta-Dirigente.");
-                return;
-            }
-            
-            players.push({
-                name: name,
-                credits: 250,
-                team: [], // Array di ID iniziativa
-                totalScore: 0
-            });
-            
-            playerNameInput.value = '';
-            updateAll();
-        }
-
-        /** Acquista un'iniziativa per un giocatore */
-        function buyInitiative(playerIndex, initiativeId) {
-            const player = players[playerIndex];
-            const initiative = initiatives.find(i => i.id === parseInt(initiativeId));
-
-            if (!initiative) return alert("Iniziativa non trovata.");
-            if (initiative.owner) return alert("Questa iniziativa è già stata acquistata!");
-            if (player.team.length >= 5) return alert(`${player.name} ha già 5 iniziative!`);
-            if (player.credits < initiative.cost) return alert(`${player.name} non ha abbastanza Crediti (CdG)!`);
-
-            player.credits -= initiative.cost;
-            player.team.push(initiative.id);
-            initiative.owner = player.name; // Marca come acquistata
-
-            updateAll();
-        }
-
-        /** Imposta un'iniziativa come Capitano */
-        function setCaptain(playerIndex, initiativeIdToMakeCaptain) {
-            const player = players[playerIndex];
-            player.team.forEach(initId => {
-                const initiative = initiatives.find(i => i.id === initId);
-                initiative.isCaptain = (initiative.id === parseInt(initiativeIdToMakeCaptain));
-            });
-            updateAll();
-        }
-
-        /** Applica un punteggio (Azione del GM) */
-        function applyScore() {
-            const initiativeId = parseInt(gmInitiativeSelect.value);
-            const ruleId = gmBonusSelect.value;
-            
-            if (!initiativeId || !ruleId) {
-                return alert("Seleziona un'iniziativa E un evento di punteggio.");
-            }
-            
-            const rule = SCORING_RULES.find(r => r.id === ruleId);
-            const initiative = initiatives.find(i => i.id === initiativeId);
-
-            // Aggiungi all'elenco degli eventi
-            gameLog.push({
-                logId: Date.now(), // ID unico per l'evento
-                initiativeId: initiative.id,
-                initiativeName: initiative.name,
-                ruleText: rule.text,
-                points: rule.points
-            });
-            
-            gmInitiativeSelect.value = '';
-            gmBonusSelect.value = '';
-
-            updateAll();
-        }
-
-        /** Rimuove un evento dal log (correzione GM) */
-        function removeLogEntry(logId) {
-            gameLog = gameLog.filter(entry => entry.logId !== logId);
-            updateAll();
-        }
-
-        // --- 4. FUNZIONI DI "RENDERING" (Aggiornamento UI) ---
-
-        /** Aggiorna l'intera UI */
-        function updateAll() {
-            renderPlayersDashboard();
-            renderGmDashboard();
-            calculateScoresAndRenderLeaderboard();
-            renderGameLog();
-        }
-
-        /** Disegna le card dei giocatori e i loro team */
-        function renderPlayersDashboard() {
-            playersDashboard.innerHTML = ''; // Pulisci
-            
-            players.forEach((player, playerIndex) => {
-                const card = document.createElement('div');
-                card.className = 'player-card';
-                
-                // Dropdown per comprare iniziative
-                let initiativesOptions = '<option value="">Compra Iniziativa...</option>';
-                initiatives.filter(i => !i.owner).forEach(init => {
-                    initiativesOptions += `<option value="${init.id}">${init.name} (${init.cost} CdG)</option>`;
-                });
-                
-                // Dropdown per impostare capitano
-                let captainOptions = '<option value="">Nomina Capitano...</option>';
-                player.team.forEach(initId => {
-                    const init = initiatives.find(i => i.id === initId);
-                    captainOptions += `<option value="${init.id}">${init.name}</option>`;
-                });
-                
-                // Team List
-                let teamList = '<ul>';
-                player.team.forEach(initId => {
-                    const init = initiatives.find(i => i.id === initId);
-                    const isCaptain = init.isCaptain;
-                    teamList += `<li class="initiative-item ${isCaptain ? 'captain' : ''}">${init.name}</li>`;
-                });
-                teamList += '</ul>';
-                
-                card.innerHTML = `
-                    <h3>${player.name}</h3>
-                    <p>Crediti (CdG) Rimasti: <strong>${player.credits}</strong></p>
-                    <div class="form-group">
-                        <select class="buy-select" data-player-index="${playerIndex}">
-                            ${initiativesOptions}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="captain-select" data-player-index="${playerIndex}">
-                            ${captainOptions}
-                        </select>
-                    </div>
-                    <h4>Portafoglio Iniziative:</h4>
-                    ${player.team.length > 0 ? teamList : '<p>Nessuna iniziativa acquistata.</p>'}
-                `;
-                playersDashboard.appendChild(card);
-            });
-        }
-
-        /** Aggiorna la dashboard del GM (solo con iniziative acquistate) */
-        function renderGmDashboard() {
-            gmInitiativeSelect.innerHTML = '<option value="">Seleziona un\'iniziativa...</option>';
-            const ownedInitiatives = initiatives.filter(i => i.owner);
-            
-            ownedInitiatives.forEach(init => {
-                gmInitiativeSelect.innerHTML += `<option value="${init.id}">${init.name} (Team: ${init.owner})</option>`;
-            });
-        }
-
-        /** Aggiorna il registro eventi */
-        function renderGameLog() {
-            gameLogList.innerHTML = ''; // Pulisci
-            [...gameLog].reverse().forEach(entry => { // Mostra i più recenti prima
-                const li = document.createElement('li');
-                const pointsClass = entry.points > 0 ? 'bonus-points' : 'malus-points';
-                li.innerHTML = `
-                    [${entry.initiativeName}] riceve 
-                    <strong class="${pointsClass}">${entry.ruleText} (${entry.points})</strong>
-                    <button class="remove-log-btn" data-log-id="${entry.logId}" style="font-size: 0.8em; margin-left: 10px; background: #e0e0e0; color: #333;">Annulla</button>
-                `;
-                gameLogList.appendChild(li);
-            });
-        }
-
-        /** Calcola i punteggi e aggiorna la classifica */
-        function calculateScoresAndRenderLeaderboard() {
-            // 1. Calcola punteggi
-            players.forEach(player => {
-                let totalScore = 0;
-                player.team.forEach(initId => {
-                    const initiative = initiatives.find(i => i.id === initId);
-                    let initiativeScore = 0;
-                    
-                    // Filtra il log per questa iniziativa
-                    gameLog.filter(entry => entry.initiativeId === initId).forEach(entry => {
-                        initiativeScore += entry.points;
-                    });
-                    
-                    // Applica modificatore Capitano
-                    if (initiative.isCaptain) {
-                        initiativeScore *= 2;
-                    }
-                    totalScore += initiativeScore;
-                });
-                player.totalScore = totalScore;
-            });
-            
-            // 2. Ordina giocatori
-            const sortedPlayers = [...players].sort((a, b) => b.totalScore - a.totalScore);
-            
-            // 3. Renderizza classifica
-            leaderboardTableBody.innerHTML = ''; // Pulisci
-            if (sortedPlayers.length === 0) {
-                leaderboardTableBody.innerHTML = '<tr><td colspan="3">Nessun giocatore ancora in partita.</td></tr>';
-                return;
-            }
-            
-            sortedPlayers.forEach((player, index) => {
-                const row = leaderboardTableBody.insertRow();
-                let emoji = '';
-                if (index === 0) emoji = '🥇';
-                if (index === 1) emoji = '🥈';
-                if (index === 2) emoji = '🥉';
-                
-                row.innerHTML = `
-                    <td>${index + 1} ${emoji}</td>
-                    <td>${player.name}</td>
-                    <td>${player.totalScore}</td>
-                `;
-            });
-        }
-        
-        // --- 5. GESTORI DI EVENTI (Cosa succede al Click) ---
-
-        // Aggiungi Giocatore
-        addPlayerBtn.addEventListener('click', addPlayer);
-
-        // Compra Iniziativa (usa "event delegation")
-        playersDashboard.addEventListener('change', (e) => {
-            if (e.target.classList.contains('buy-select')) {
-                const playerIndex = e.target.dataset.playerIndex;
-                const initiativeId = e.target.value;
-                if (initiativeId) {
-                    buyInitiative(playerIndex, initiativeId);
-                }
-            }
-            if (e.target.classList.contains('captain-select')) {
-                const playerIndex = e.target.dataset.playerIndex;
-                const initiativeId = e.target.value;
-                if (initiativeId) {
-                    setCaptain(playerIndex, initiativeId);
-                }
-            }
-        });
-
-        // Applica Punteggio (GM)
-        applyScoreBtn.addEventListener('click', applyScore);
-
-        // Rimuovi Punteggio (GM)
-        gameLogList.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-log-btn')) {
-                const logId = parseInt(e.target.dataset.logId);
-                removeLogEntry(logId);
-            }
-        });
-
-        // --- 6. AVVIO ---
-        initializeGame();
+  function initializeGame() {
+    // Popola tabella iniziative
+    initiativesTableBody.innerHTML = '';
+    initiatives.forEach(init => {
+      const row = initiativesTableBody.insertRow();
+      row.innerHTML = `<td>${init.id_poa}</td><td>${init.name}</td><td>${init.role}</td><td>${init.cost} CdG</td><td>${init.notes}</td>`;
     });
-    </script>
+
+    // Popola dropdown GM
+    gmBonusSelect.innerHTML = '<option value="">Seleziona un evento...</option>';
+    SCORING_RULES.forEach(rule => {
+      const pointsText = rule.points>0?`+${rule.points}`:rule.points;
+      gmBonusSelect.innerHTML += `<option value="${rule.id}">${rule.text} (${pointsText})</option>`;
+    });
+
+    updateAll();
+  }
+
+  function addPlayer() {
+    const name = playerNameInput.value.trim();
+    if(!name) return alert("Inserisci un nome valido.");
+    players.push({ name, credits:250, team:[], totalScore:0 });
+    playerNameInput.value='';
+    updateAll();
+  }
+
+  // Event listener
+  addPlayerBtn.addEventListener('click', addPlayer);
+
+  function updateAll() {
+    // Dashboard, leaderboard e registro eventi
+    playersDashboard.innerHTML='';
+    players.forEach((player, idx) => {
+      const card=document.createElement('div'); card.className='player-card';
+      card.innerHTML=`<h3>${player.name}</h3><p>CdG: ${player.credits}</p>`;
+      playersDashboard.appendChild(card);
+    });
+    leaderboardTableBody.innerHTML = players.length? players.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.totalScore}</td></tr>`).join('') : '<tr><td colspan="3">Nessun giocatore ancora in partita.</td></tr>';
+  }
+
+  initializeGame();
+});
+</script>
+
+<!-- === SCRIPT NETLIFY IDENTITY === -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if(window.netlifyIdentity){
+    window.netlifyIdentity.init();
+    window.netlifyIdentity.on('init', user=>{
+      if(!user) window.netlifyIdentity.open();
+    });
+    window.netlifyIdentity.on('login', user=>window.location.href="/");
+    window.netlifyIdentity.on('logout', ()=>window.location.href="/login.html");
+  }
+});
+</script>
+
 </body>
 </html>
