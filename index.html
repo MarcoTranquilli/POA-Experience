@@ -32,6 +32,35 @@
             margin: 0;
             font-size: 2.2em;
         }
+    </style>
+</head>
+<body>
+
+<!-- === 2. SCRIPT DI PROTEZIONE === -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.init();
+    const user = window.netlifyIdentity.currentUser();
+    if (!user) {
+      window.location.href = "/login.html"; // reindirizza se non loggato
+    }
+  }
+</script>
+
+<!-- === 3. CONTENUTO DELLA PAGINA === -->
+<div class="container">
+    <div class="header">
+        <h1>Fanta-POA 4.0: L'Istruttoria Perfetta</h1>
+    </div>
+    <p>Benvenuto nel sito protetto!</p>
+    <!-- resto del contenuto -->
+</div>
+
+</body>
+</html>
+
+        }
         .header p {
             font-size: 1.2em;
             opacity: 0.9;
