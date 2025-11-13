@@ -41,12 +41,15 @@
 <script>
   if (window.netlifyIdentity) {
     window.netlifyIdentity.init();
-    const user = window.netlifyIdentity.currentUser();
-    if (!user) {
-      window.location.href = "/login.html"; // reindirizza se non loggato
-    }
+
+    window.netlifyIdentity.on('init', user => {
+      if (!user) {
+        window.location.href = "/login.html";
+      }
+    });
   }
 </script>
+
 
 <!-- === 3. CONTENUTO DELLA PAGINA === -->
 <div class="container">
